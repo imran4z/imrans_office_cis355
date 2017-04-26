@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link   href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+	
+		var getUrlParameter = function getUrlParameter(sParam) {
+			var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+				sURLVariables = sPageURL.split('&'),
+				sParameterName,
+				i;
+
+			for (i = 0; i < sURLVariables.length; i++) {
+				sParameterName = sURLVariables[i].split('=');
+
+				if (sParameterName[0] === sParam) {
+					return sParameterName[1] === undefined ? true : sParameterName[1];
+				}
+			}
+		};
+		
+		function getID() {
+			return getUrlParameter("id");
+		}
+        ID = getID();
+
+        function retrievePage() {
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    document.getElementById("body").innerHTML = xhttp.responseText;
+                }
+            };
+
+            xhttp.open("GET", "http://csis.svsu.edu/~ikhan12/cis355_winter17/ImransOffice/assignments_update.php?id=" + ID, true);
+            xhttp.send();
+        }
+        
+        $(document).ready( function() {
+            $("#update").click( function() {
+                var assignment=$("#assignment").val();
+                var employee_name=$("#employee_name").val();
+                var status=$("#status").val();
+                var manager_review=$("#manager_review").val();
+				var comments=$("#comments").val();
+                var dataString=
+                     "&ID="+ID
+                    +"&assignment="+assignment
+                    +"&employee_name="+employee_name
+                    +"&status="+status
+                    +"&manager_review="+manager_review
+					+"&comments="+comments
+                    +"&update="; 
+                if ($.trim(assignment).length>0 
+					& $.trim(employee_name).length>0 
+					& $.trim(status).length>0
+					& $.trim(manager_review).length>0
+					& $.trim(comments).length>0)
+					{
+                    $.ajax( {
+                        type: "POST",
+                        url: "http://csis.svsu.edu/~ikhan12/cis355_winter17/ImransOffice/assignments_update.php",
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function(){ $("#update").val('Connecting...');},
+                        success: function(data){ 
+                            location.href = "assignments_list.html"; 
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body onload="retrievePage();" background="https://newevolutiondesigns.com/images/freebies/white-wallpaper-24.jpg">
+    <div style="margin-top: 5%; margin-bottom: 5%; margin-left: 3% !important; margin-right: 3% !important;">
+        <div id="body"></div>        
+        <div class="form-actions">
+            <input type="button" id="update" class="btn btn-success" value="Update"/>
+            <a class="btn" href="assignments_list.html">Back</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link   href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+	
+    <script>
+		var getUrlParameter = function getUrlParameter(sParam) {
+			var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+				sURLVariables = sPageURL.split('&'),
+				sParameterName,
+				i;
+
+			for (i = 0; i < sURLVariables.length; i++) {
+				sParameterName = sURLVariables[i].split('=');
+
+				if (sParameterName[0] === sParam) {
+					return sParameterName[1] === undefined ? true : sParameterName[1];
+				}
+			}
+		};
+		
+		function getID() {
+			return getUrlParameter("id");
+		}
+	
+        function retrievePage() {
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    document.getElementById("body").innerHTML = xhttp.responseText;
+                }
+            };
+
+            xhttp.open("GET", "http://csis.svsu.edu/~ikhan12/cis355_winter17/ImransOffice/employee_read.php?id="+getID(), true);
+            xhttp.send();
+        }
+    </script>
+</head>
+
+<body onload="retrievePage();" background="https://newevolutiondesigns.com/images/freebies/white-wallpaper-24.jpg">
+    <div id="body"></div>    
+</body>
+</html>

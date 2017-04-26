@@ -1,0 +1,102 @@
+<?php
+	session_start();
+			if(!isset($_SESSION["e_id"])){ // if "user" not set,
+			session_destroy();
+			header('Location: login3.php');     // go to login page
+		
+		exit;
+		}
+		$sessionid = $_SESSION['e_id'];
+	include database.php;
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link   href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready( function() {
+            $("#insert").click( function() {
+                var event_name=encodeURI($("#event_name").val());
+				var event_date=$("#event_date").val();
+                var event_time=$("#event_time").val();
+				var event_location=$("#event_location").val();
+				var event_description=$("#event_description").val();
+                var dataString=
+                     "&event_name="+event_name
+					+"&event_date="+event_date
+                    +"&event_time="+event_time
+					+"&event_location="+event_location
+					+"&event_description="+event_description
+                    +"&insert=";     
+					
+					if(   $.trim(event_name).length>0 
+                    & $.trim(event_date).length>0 
+                    & $.trim(event_time).length>0
+					& $.trim(event_location).length>0
+					& $.trim(event_description).length>0) {
+                    $.ajax( {
+                        type: "POST",
+                        url: "http://csis.svsu.edu/~ikhan12/cis355_winter17/ImransOffice/events_create.php",
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function(){ $("#insert").val('Connecting...');},
+                        success: function(data){ location.href = "events_list.html"; }
+						//success: function(data){}
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body background="https://newevolutiondesigns.com/images/freebies/white-wallpaper-24.jpg">
+    <div style="margin-top: 5%; margin-bottom: 5%; margin-left: 3%; margin-right: 3%;">
+        <h3>Imran's Office: Add Event</h3>
+        <p><a href="imr_office.html" class="btn btn-primary">Home</a></p>
+        <div class="control-group ">
+            <label class="control-label">event_name</label>
+            <div class="controls">
+                <input id="event_name" type="text"  placeholder="event_name" value="" required>
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">event_date</label>
+            <div class="controls">
+                <input id="event_date" type="text"  placeholder="event_date" value="" required>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label">event_time</label>
+            <div class="controls">
+                <input id="event_time" type="text" placeholder="event_time" value="" required>
+            </div>
+        </div>
+		
+		<div class="control-group">
+            <label class="control-label">event_location</label>
+            <div class="controls">
+                <input id="event_location" type="text" placeholder="event_location" value="" required>
+            </div>
+        </div>
+		
+		<div class="control-group">
+            <label class="control-label">event_description</label>
+            <div class="controls">
+                <input id="event_description" type="text" placeholder="event_description" value="" required>
+            </div>
+        </div>
+		
+        <div class="form-actions">
+            <input type="button" id="insert" class="btn btn-success" value="Create"/>
+            <a class="btn" href="events_list.html">Back</a>
+        </div>
+    </div>
+</body>
+</html>

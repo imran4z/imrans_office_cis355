@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link   href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+	var getUrlParameter = function getUrlParameter(sParam) {
+			var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+				sURLVariables = sPageURL.split('&'),
+				sParameterName,
+				i;
+
+			for (i = 0; i < sURLVariables.length; i++) {
+				sParameterName = sURLVariables[i].split('=');
+
+				if (sParameterName[0] === sParam) {
+					return sParameterName[1] === undefined ? true : sParameterName[1];
+				}
+			}
+		};
+		
+		function getID() {
+			return getUrlParameter("id");
+		}
+        $(document).ready( function() {
+            $("#delete").click( function() {
+                $.ajax( {
+                    type: "POST",
+                    url: "http://csis.svsu.edu/~ikhan12/cis355_winter17/ImransOffice/assignments_delete.php",
+                    data: "id="+getID()+"&delete=",
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ $("#delete").val('Connecting...');},
+                    success: function(data){ location.href = "assignments_list.html"; }
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body background="https://newevolutiondesigns.com/images/freebies/white-wallpaper-24.jpg">
+    <div style="margin-top: 5%; margin-bottom: 5%; margin-left: 3% !important; margin-right: 3% !important;">
+        <h3>Imran's Office: Delete Assignment</h3>
+        <p><a href="imr_office.html" class="btn btn-primary">Home</a></p>            
+        <p class="alert alert-error">Are you sure you want to delete?</p>
+        <div class="form-actions">
+            <input type="button" id="delete" class="btn btn-danger" value="Yes"/>
+            <a class="btn" href="assignments_list.html">No</a>
+        </div>
+    </div>
+</body>

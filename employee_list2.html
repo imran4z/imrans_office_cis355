@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link   href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+        function retrievePage() {
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    document.getElementById("body").innerHTML = xhttp.responseText;
+                }
+            };
+            
+            xhttp.open("GET", "http://csis.svsu.edu/~ikhan12/cis355_winter17/ImransOffice/employee_list2.php", true);
+            xhttp.send();
+        }
+    </script>
+</head>
+
+<body onload="retrievePage();" background="https://newevolutiondesigns.com/images/freebies/white-wallpaper-24.jpg">
+    <div id="body"></div>    
+</body>
+</html>

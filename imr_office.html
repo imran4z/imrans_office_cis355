@@ -1,0 +1,47 @@
+<?php
+	session_start();
+			if(!isset($_SESSION["e_id"])){ // if "user" not set,
+			session_destroy();
+			header('Location: login3.php');     // go to login page
+		
+		exit;
+		}
+		$sessionid = $_SESSION['e_id'];
+	include database.php;
+?>
+<!DOCTYPE html>
+<html lang="en">
+<!-- 1. head: include bootstrap files -->
+
+
+<head>
+    <meta charset="utf-8">
+    <link   href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body background="https://newevolutiondesigns.com/images/freebies/white-wallpaper-24.jpg">
+
+    <div class="container">
+	<div style="margin-top: 2%; margin-bottom: 5%; margin-left: 3%; margin-right: 3%;">	
+    	<div class="row">
+		<div class="background">
+		<div class="transbox">
+    		<h2>Imran's Office</h2>
+			<p>Welcome Friends! Feel free to access the below options for Imran's Office</p>
+    	</div>
+		<div class="row">
+			<p>
+				<a href="employee_list2.html" class="btn btn-success">Employees</a>
+				<a href="events_list.html" class="btn btn-info">Events</a>
+				<a href="assignments_list.html" class="btn btn-primary">Assignments</a>
+
+			</p>
+    	</div>
+		<div>
+			<h3>Remember This My Fellow Comrades</h3>
+			<img src="pic.jpg" alt="Office Quote" style="width:400px;height:470px;">
+		</div>
+    </div> <!-- end: class="container" -->
+</body>
+</html>
